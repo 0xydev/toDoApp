@@ -1,11 +1,12 @@
 package main
 
 import (
+	"toDoApp/handler"
+	"toDoApp/models"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	"toDoApp/handler"
-	"toDoApp/models"
 )
 
 var err error
@@ -26,5 +27,7 @@ func main() {
 	r.DELETE("/todos/:id", handler.DeleteTodo)
 	r.GET("/todos/:id", handler.GetTodo)
 	r.PUT("/todos/:id", handler.UpdateTodo)
+	r.GET("/todos/completed", handler.GetCompletedTodos)
+	r.GET("/todos/incomplete", handler.GetIncompleteTodos)
 	r.Run()
 }

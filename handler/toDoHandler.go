@@ -1,9 +1,10 @@
 package handler
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"toDoApp/models"
+
+	"github.com/gin-gonic/gin"
 )
 
 func GetTodos(c *gin.Context) {
@@ -53,4 +54,15 @@ func DeleteTodo(c *gin.Context) {
 	}
 	models.DB.Delete(&todo)
 	c.JSON(http.StatusOK, gin.H{"data": true})
+}
+func GetCompletedTodos(c *gin.Context) {
+	var todos []models.Todo
+	models.DB.Where("completed = ?", true).Find(&todos)
+	c.JSON(http.StatusOK, gin.H{"data": todos})
+}
+
+func GetIncompleteTodos(c *gin.Context) {
+	var todos []models.Todo
+	models.DB.Where("completed = ?", false).Find(&todos)
+	c.JSON(http.StatusOK, gin.H{"data": todos})
 }
